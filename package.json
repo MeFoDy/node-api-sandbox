@@ -1,0 +1,27 @@
+{
+  "name": "api-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MeFoDy/node-api-sandbox.git"
+  },
+  "author": "Nikita Dubko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MeFoDy/node-api-sandbox/issues"
+  },
+  "homepage": "https://github.com/MeFoDy/node-api-sandbox#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.0-rc0",
+    "mongoose": "^4.13.6",
+    "winston": "^2.4.0",
+    "winston-daily-rotate-file": "^1.7.2"
+  }
+}
