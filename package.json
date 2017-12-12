@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 10000 --recursive --exit app/**/*.spec.js",
+    "dev": "SET NODE_ENV=dev && node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,13 @@
     "express": "^4.16.2",
     "mongodb": "^3.0.0-rc0",
     "mongoose": "^4.13.6",
+    "mongoose-timestamp": "^0.6.0",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.0.1"
   }
 }

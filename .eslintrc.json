@@ -9,7 +9,8 @@
     "env": {
         "node": true,
         "mocha": true,
-        "mongo": true
+        "mongo": true,
+        "es6": true
     },
     "rules": {
         "array-bracket-spacing": ["warn", "never"],

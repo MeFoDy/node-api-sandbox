@@ -1,42 +1,67 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const logger = require('../../utils/logger');
+const errorHandler = require('../../utils/errorHandler');
 const statusCodes = require('../../../config/statusCodes');
 
-const Entrant = require('./model');
+const EntrantService = require('./service');
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json({ type: 'application/json' }));
 
 router.post('/', (req, res) => {
-    Entrant.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        patronymic: req.body.patronymic,
-        sex: req.body.sex,
-        dateOfBirth: req.body.dateOfBirth,
-    }, (err, entrant) => {
-        if (err) {
-            logger.log('error', `Cannot add new entrant to the database: ${JSON.stringify(entrant)}`);
-            return res
-                .status(statusCodes.serverInternalError)
-                .send('Cannot add new entrant to the database');
-        }
-        res.status(statusCodes.ok).send(entrant);
-    });
+    EntrantService
+        .create(req.body)
+        .then(entrant => {
+            res.status(statusCodes.ok).send(entrant);
+        })
+        .catch(err => {
+            errorHandler(err, res, 'Cannot add new entrant to the database');
+        });
 });
 
 router.get('/', (req, res) => {
-    Entrant.find({}, (err, entrants) => {
-        if (err) {
-            logger.log('error', `Cannot get entrants list from database`);
-            return res
-                .status(statusCodes.serverInternalError)
-                .send('Cannot get entrants list from database');
-        }
-        res.status(statusCodes.ok).send(entrants);
-    });
+    EntrantService
+        .getList()
+        .then(entrants => {
+            res.status(statusCodes.ok).send(entrants);
+        })
+        .catch(err => {
+            errorHandler(err, res, 'Cannot get entrants list from database');
+        });
+});
+
+router.get('/:id', (req, res) => {
+    EntrantService
+        .get(req.params.id)
+        .then(entrant => {
+            res.status(statusCodes.ok).send(entrant);
+        })
+        .catch(err => {
+            errorHandler(err, res, 'Cannot get entrant from database');
+        });
+});
+
+router.delete('/:id', (req, res) => {
+    EntrantService
+        .remove(req.params.id)
+        .then(() => {
+            res.status(statusCodes.ok).send();
+        })
+        .catch(err => {
+            errorHandler(err, res, 'Cannot remove entrant from database');
+        });
+});
+
+router.put('/:id', (req, res) => {
+    EntrantService
+        .update(req.params.id, req.body)
+        .then(entrant => {
+            res.status(statusCodes.ok).send(entrant);
+        })
+        .catch(err => {
+            errorHandler(err, res, 'Cannot update entrant');
+        });
 });
 
 module.exports = router;

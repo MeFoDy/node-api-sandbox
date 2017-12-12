@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
 const dbConfig = require('../config/db');
 
-mongoose.connect(dbConfig.connectionString);
+mongoose.Promise = Promise;
+
+const options = {
+    useMongoClient: true,
+};
+mongoose.connect(dbConfig.connectionString, options);

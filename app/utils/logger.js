@@ -33,4 +33,20 @@ const logger = new (winston.Logger)({
     ],
 });
 
-module.exports = logger;
+function formatMessage(message, err) {
+    return message + (err ? ` — ${err}` : '');
+}
+
+function error(message, err) {
+    logger.log('error', formatMessage(message, err));
+}
+
+function info(message, err) {
+    logger.log('info', formatMessage(message, err));
+}
+
+module.exports = {
+    entity: logger,
+    error,
+    info,
+};
