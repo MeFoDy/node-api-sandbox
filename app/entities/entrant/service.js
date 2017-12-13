@@ -19,13 +19,8 @@ function remove(id) {
 }
 
 function update(id, entrant) {
-    return Entrant
-        .findById(id)
-        .then(dbEntrant => {
-            const validEntrant = _pick(entrant, fields);
-            dbEntrant.set(validEntrant);
-            return dbEntrant.save();
-        });
+    const validEntrant = _pick(entrant, fields);
+    return Entrant.findByIdAndUpdate(id, { $set: validEntrant }, { new: true });
 }
 
 module.exports = {

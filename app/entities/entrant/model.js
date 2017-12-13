@@ -25,6 +25,7 @@ EntrantSchema.plugin(timestamps);
 const EntrantModel = mongoose.model('Entrant', EntrantSchema);
 
 module.exports = {
+    schema: EntrantSchema,
     model: EntrantModel,
     fields: Object.getOwnPropertyNames(fields),
 };
