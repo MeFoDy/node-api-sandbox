@@ -19,6 +19,7 @@ const commonOptions = {
 const consoleLoggerOptions = Object.assign({
     colorize: true,
     level: 'info',
+    silent: process.env.NODE_ENV === 'test',
 }, commonOptions);
 const fileLoggerOptions = Object.assign({
     filename: path.resolve(__dirname, `../../${config.logDir}/${config.serverFileName}`),

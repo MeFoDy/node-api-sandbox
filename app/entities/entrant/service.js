@@ -1,8 +1,8 @@
+const _pick = require('lodash/pick');
 const { model: Entrant, fields } = require('./model');
-const copyObjectFields = require('../../utils/objectHelper').copyObjectFields;
 
 function create(entity) {
-    const newEntity = copyObjectFields(entity, fields);
+    const newEntity = _pick(entity, fields);
     return Entrant.create(newEntity);
 }
 
@@ -22,7 +22,7 @@ function update(id, entrant) {
     return Entrant
         .findById(id)
         .then(dbEntrant => {
-            const validEntrant = copyObjectFields(entrant, fields);
+            const validEntrant = _pick(entrant, fields);
             dbEntrant.set(validEntrant);
             return dbEntrant.save();
         });

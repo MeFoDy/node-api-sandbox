@@ -6,4 +6,7 @@ mongoose.Promise = Promise;
 const options = {
     useMongoClient: true,
 };
-mongoose.connect(dbConfig.connectionString, options);
+const connectionString = process.env.NODE_ENV === 'test' ?
+    dbConfig.connectionStringTest :
+    dbConfig.connectionString;
+mongoose.connect(connectionString, options);

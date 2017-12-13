@@ -1,13 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 const errorHandler = require('../../utils/errorHandler');
 const statusCodes = require('../../../config/statusCodes');
 
 const EntrantService = require('./service');
-
-router.use(bodyParser.json());
-router.use(bodyParser.json({ type: 'application/json' }));
 
 router.post('/', (req, res) => {
     EntrantService

@@ -1,0 +1,4 @@
+{
+    "connectionString": "mongodb://user:password@url/node-api-sandbox",
+    "connectionStringTest": "mongodb://localhost:27017/mongo_test"
+}

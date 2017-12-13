@@ -22,9 +22,9 @@ const fields = {
 };
 const EntrantSchema = new mongoose.Schema(fields);
 EntrantSchema.plugin(timestamps);
-mongoose.model('Entrant', EntrantSchema);
+const EntrantModel = mongoose.model('Entrant', EntrantSchema);
 
 module.exports = {
-    model: mongoose.model('Entrant'),
+    model: EntrantModel,
     fields: Object.getOwnPropertyNames(fields),
 };

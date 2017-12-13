@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
-const db = require('./db');
-const logger = require('./utils/logger');
+const bodyParser = require('body-parser');
 
-const EntrantsController = require('./entities/entrant/controller');
+require('./db');
+require('./utils/logger');
+
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/json' }));
+
+const EntrantsController = require('./entities/entrant');
 app.use('/entrants', EntrantsController);
 
 module.exports = app;
