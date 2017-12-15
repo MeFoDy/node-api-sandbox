@@ -1,26 +1,26 @@
 const _pick = require('lodash/pick');
-const { model: Entrant, fields } = require('./model');
+const { fields } = require('./model');
+const EntrantRepository = require('./repository');
 
 function create(entity) {
     const newEntity = _pick(entity, fields);
-    return Entrant.create(newEntity);
+    return EntrantRepository.create(newEntity);
 }
 
 function getList() {
-    return Entrant.find({}).exec();
+    return EntrantRepository.getList();
 }
 
 function get(id) {
-    return Entrant.findById(id);
+    return EntrantRepository.get(id);
 }
-
 function remove(id) {
-    return Entrant.remove({ _id: id });
+    return EntrantRepository.remove(id);
 }
 
 function update(id, entrant) {
     const validEntrant = _pick(entrant, fields);
-    return Entrant.findByIdAndUpdate(id, { $set: validEntrant }, { new: true });
+    return EntrantRepository.update(id, validEntrant);
 }
 
 module.exports = {

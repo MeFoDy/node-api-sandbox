@@ -31,6 +31,27 @@ describe('Faculties', () => {
         description: '',
     };
 
+    const credentials = {
+        username: 'test',
+        password: 'test',
+    };
+
+    let token = '';
+
+    function signin() {
+        return chai
+            .request(server)
+            .post('/user/signin/')
+            .send(credentials)
+            .then(res => {
+                token = res.body.token;
+            });
+    }
+
+    before(async () => {
+        await signin();
+    });
+
     beforeEach(async () => {
         await FacultyModel.remove({});
         await FacultyModel.create(faculties);
@@ -81,6 +102,7 @@ describe('Faculties', () => {
             return chai
                 .request(server)
                 .post('/faculty')
+                .set('Authorization', token)
                 .send(faculty)
                 .catch(err => err.response)
                 .then(res => {
@@ -95,6 +117,7 @@ describe('Faculties', () => {
             const faculty = await addNewValidFaculty();
             return chai.request(server)
                 .post('/faculty')
+                .set('Authorization', token)
                 .send(faculty)
                 .then(res => {
                     res.should.have.status(200);
@@ -117,6 +140,7 @@ describe('Faculties', () => {
             };
             return chai.request(server)
                 .put(`/faculty/${faculty._id}`)
+                .set('Authorization', token)
                 .send(updatedData)
                 .then(res => {
                     res.should.have.status(200);
@@ -134,6 +158,7 @@ describe('Faculties', () => {
             const faculty = await addNewValidFaculty();
             return chai.request(server)
                 .delete(`/faculty/${faculty._id}`)
+                .set('Authorization', token)
                 .then(res => {
                     res.should.have.status(200);
                     return FacultyModel.findById(faculty._id).then(res => {

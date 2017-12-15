@@ -1,4 +1,6 @@
 {
     "ok": 200,
+    "unauthorized": 401,
+    "forbidden": 403,
     "serverInternalError": 500
 }

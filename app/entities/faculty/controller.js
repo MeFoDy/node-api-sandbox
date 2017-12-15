@@ -1,11 +1,13 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
-const errorHandler = require('../../utils/errorHandler');
+const { errorHandler, authorization } = require('../../utils');
 const statusCodes = require('../../../config/statusCodes');
 
 const FacultyService = require('./service');
 
-router.post('/', (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+    if (!authorization.isAuthorized(req.headers, res)) return;
     FacultyService
         .create(req.body)
         .then(faculty => {
@@ -38,7 +40,8 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    if (!authorization.isAuthorized(req.headers, res)) return;
     FacultyService
         .remove(req.params.id)
         .then(() => {
@@ -49,7 +52,8 @@ router.delete('/:id', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    if (!authorization.isAuthorized(req.headers, res)) return;
     FacultyService
         .update(req.params.id, req.body)
         .then(faculty => {

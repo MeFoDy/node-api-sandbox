@@ -1,26 +1,27 @@
 const _pick = require('lodash/pick');
-const { model: Faculty, fields } = require('./model');
+const { fields } = require('./model');
+const FacultyRepository = require('./repository');
 
 function create(entity) {
     const newFaculty = _pick(entity, fields);
-    return Faculty.create(newFaculty);
+    return FacultyRepository.create(newFaculty);
 }
 
 function getList() {
-    return Faculty.find({}).exec();
+    return FacultyRepository.getList();
 }
 
 function get(id) {
-    return Faculty.findById(id);
+    return FacultyRepository.get(id);
 }
 
 function remove(id) {
-    return Faculty.remove({ _id: id });
+    return FacultyRepository.remove(id);
 }
 
-function update(id, entrant) {
-    const validFaculty = _pick(entrant, fields);
-    return Faculty.findByIdAndUpdate(id, { $set: validFaculty }, { new: true });
+function update(id, faculty) {
+    const validFaculty = _pick(faculty, fields);
+    return FacultyRepository.update(id, validFaculty);
 }
 
 module.exports = {
